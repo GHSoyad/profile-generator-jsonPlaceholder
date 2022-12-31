@@ -1,7 +1,6 @@
 import { Col, Row } from 'antd';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import './App.css';
 import ProfileCard from './components/ProfileCard/ProfileCard';
 import Loader from './Loader/Loader';
 import { getUsers, loadingUsers } from './redux/usersSlice';
@@ -26,9 +25,9 @@ function App() {
     <>
       {
         loading ? <Loader></Loader> :
-          <Row gutter={[24, 24]} style={{ padding: "24px" }}>
+          <Row style={{ padding: "8px" }}>
             {
-              users.map(user => <Col xs={24} sm={12} md={8} lg={6} key={user.id}><ProfileCard user={user}></ProfileCard></Col>)
+              users.map(user => <Col xs={24} sm={12} lg={8} xl={6} key={user.id}><ProfileCard user={user}></ProfileCard></Col>)
             }
           </Row>
       }

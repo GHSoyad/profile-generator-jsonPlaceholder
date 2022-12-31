@@ -1,24 +1,19 @@
-import { Button, Card, Modal } from 'antd';
+import { Button, Card } from 'antd';
 import React, { useState } from 'react';
-import { BankOutlined, DeleteFilled, EditOutlined, GlobalOutlined, HeartOutlined, MailOutlined, PhoneOutlined } from '@ant-design/icons';
+import { BankOutlined, DeleteFilled, EditOutlined, GlobalOutlined, HeartFilled, HeartOutlined, HomeOutlined, MailOutlined, PhoneOutlined } from '@ant-design/icons';
 import './ProfileCard.css';
 import { useDispatch } from 'react-redux';
-import { deleteUser } from '../../redux/usersSlice';
+import { deleteUser, likeUser } from '../../redux/usersSlice';
+import ModalForm from '../ModalForm/ModalForm';
 
-const ProfileCard = ({ user, handleEdit, handleDelete }) => {
+const ProfileCard = ({ user }) => {
 
-    const { id, name, email, phone, website, company } = user;
+    const { id, name, email, phone, address, website, company, liked } = user;
     const dispatch = useDispatch();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const showModal = () => {
         setIsModalOpen(true);
-    };
-    const handleOk = () => {
-        setIsModalOpen(false);
-    };
-    const handleCancel = () => {
-        setIsModalOpen(false);
     };
 
     return (
@@ -26,10 +21,11 @@ const ProfileCard = ({ user, handleEdit, handleDelete }) => {
             <Card
                 cover={<div className='card-image' style={{ display: 'flex' }}><img style={{ width: 200, height: 200, objectFit: "cover", borderRadius: 0 }} alt={name} src={`https://avatars.dicebear.com/v2/avataaars/${name}.svg?options[mood][]=happy`}></img></div>}
                 actions={[
-                    <Button type='link' className='card-btn' style={{ color: "red" }}><HeartOutlined></HeartOutlined></Button>,
+                    <Button onClick={() => dispatch(likeUser(id))} type='link' className='card-btn' style={{ color: "red" }}>{liked ? <HeartFilled></HeartFilled> : <HeartOutlined></HeartOutlined>}</Button>,
                     <Button onClick={showModal} type='link' className='card-btn'><EditOutlined></EditOutlined></Button>,
                     <Button onClick={() => dispatch(deleteUser(id))} type='link' className='card-btn'><DeleteFilled></DeleteFilled></Button>
                 ]}
+                style={{ margin: "12px" }}
             >
                 <h3 className='card-name'>{name}</h3>
                 <div className='card-icon'>
@@ -41,6 +37,10 @@ const ProfileCard = ({ user, handleEdit, handleDelete }) => {
                     <p>{phone}</p>
                 </div>
                 <div className='card-icon'>
+                    <HomeOutlined className='icon'></HomeOutlined>
+                    <p>{address.city}</p>
+                </div>
+                <div className='card-icon'>
                     <GlobalOutlined className='icon'></GlobalOutlined>
                     <p>{website}</p>
                 </div>
@@ -49,11 +49,8 @@ const ProfileCard = ({ user, handleEdit, handleDelete }) => {
                     <p>{company.name}</p>
                 </div>
             </Card>
-            <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                <p>Some contents...</p>
-                <p>Some contents...</p>
-                <p>Some contents...</p>
-            </Modal>
+            <ModalForm user={user} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
+            </ModalForm>
         </>
     );
 };
