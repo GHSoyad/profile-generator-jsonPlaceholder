@@ -2,21 +2,21 @@ import { Button, Card, Modal } from 'antd';
 import React, { useState } from 'react';
 import { BankOutlined, DeleteFilled, EditOutlined, GlobalOutlined, HeartOutlined, MailOutlined, PhoneOutlined } from '@ant-design/icons';
 import './ProfileCard.css';
+import { useDispatch } from 'react-redux';
+import { deleteUser } from '../../redux/usersSlice';
 
 const ProfileCard = ({ user, handleEdit, handleDelete }) => {
 
     const { id, name, email, phone, website, company } = user;
+    const dispatch = useDispatch();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
-
     const showModal = () => {
         setIsModalOpen(true);
     };
-
     const handleOk = () => {
         setIsModalOpen(false);
     };
-
     const handleCancel = () => {
         setIsModalOpen(false);
     };
@@ -28,7 +28,7 @@ const ProfileCard = ({ user, handleEdit, handleDelete }) => {
                 actions={[
                     <Button type='link' className='card-btn' style={{ color: "red" }}><HeartOutlined></HeartOutlined></Button>,
                     <Button onClick={showModal} type='link' className='card-btn'><EditOutlined></EditOutlined></Button>,
-                    <Button onClick={() => handleDelete(id)} type='link' className='card-btn'><DeleteFilled></DeleteFilled></Button>
+                    <Button onClick={() => dispatch(deleteUser(id))} type='link' className='card-btn'><DeleteFilled></DeleteFilled></Button>
                 ]}
             >
                 <h3 className='card-name'>{name}</h3>
