@@ -4,11 +4,14 @@ export const usersSlice = createSlice({
     name: 'users',
     initialState: {
         users: [],
-        loading: true
+        loading: true,
+        expire: ''
     },
     reducers: {
         getUsers: (state, action) => {
             state.users = action.payload;
+            state.loading = false;
+            state.expire = Date.now();
         },
         loadingUsers: (state, action) => {
             state.loading = action.payload;
@@ -21,7 +24,6 @@ export const usersSlice = createSlice({
             } else {
                 user.liked = true;
             }
-            console.log(user)
         },
         updateUser: (state, action) => {
             const { id, values } = action.payload;
@@ -40,7 +42,6 @@ export const usersSlice = createSlice({
         deleteUser: (state, action) => {
             const userId = action.payload;
             state.users = state.users.filter(user => user.id !== userId);
-            console.log(state.users)
         }
     }
 })
