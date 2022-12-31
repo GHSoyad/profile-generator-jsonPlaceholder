@@ -1,16 +1,35 @@
-import { Card } from 'antd';
-import React from 'react';
-import { BankOutlined, GlobalOutlined, MailOutlined, PhoneOutlined } from '@ant-design/icons';
+import { Button, Card, Modal } from 'antd';
+import React, { useState } from 'react';
+import { BankOutlined, DeleteFilled, EditOutlined, GlobalOutlined, HeartOutlined, MailOutlined, PhoneOutlined } from '@ant-design/icons';
 import './ProfileCard.css';
 
-const ProfileCard = ({ user }) => {
+const ProfileCard = ({ user, handleEdit, handleDelete }) => {
 
-    const { name, email, phone, website, company } = user;
+    const { id, name, email, phone, website, company } = user;
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
 
     return (
         <>
             <Card
-                cover={<div className='card-image' style={{ display: 'flex' }}><img style={{ width: 200, height: 200, objectFit: "cover", borderRadius: 0 }} alt={name} src='https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80'></img></div>}
+                cover={<div className='card-image' style={{ display: 'flex' }}><img style={{ width: 200, height: 200, objectFit: "cover", borderRadius: 0 }} alt={name} src={`https://avatars.dicebear.com/v2/avataaars/${name}.svg?options[mood][]=happy`}></img></div>}
+                actions={[
+                    <Button type='link' className='card-btn' style={{ color: "red" }}><HeartOutlined></HeartOutlined></Button>,
+                    <Button onClick={showModal} type='link' className='card-btn'><EditOutlined></EditOutlined></Button>,
+                    <Button onClick={() => handleDelete(id)} type='link' className='card-btn'><DeleteFilled></DeleteFilled></Button>
+                ]}
             >
                 <h3 className='card-name'>{name}</h3>
                 <div className='card-icon'>
@@ -30,6 +49,11 @@ const ProfileCard = ({ user }) => {
                     <p>{company.name}</p>
                 </div>
             </Card>
+            <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                <p>Some contents...</p>
+                <p>Some contents...</p>
+                <p>Some contents...</p>
+            </Modal>
         </>
     );
 };

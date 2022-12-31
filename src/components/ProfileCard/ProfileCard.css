@@ -24,3 +24,12 @@
 .icon {
     font-size: 18px;
 }
+
+.card-btn {
+    border: none;
+    outline: none;
+    font-size: 18px;
+    color: rgba(0, 0, 0, 0.7);
+    cursor: pointer;
+    padding: 2px 4px;
+}
