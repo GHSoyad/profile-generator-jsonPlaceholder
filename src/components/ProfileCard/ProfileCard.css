@@ -33,3 +33,7 @@
     cursor: pointer;
     padding: 2px 4px;
 }
+
+.ant-card .ant-card-actions li>span {
+    display: inline-block;
+}

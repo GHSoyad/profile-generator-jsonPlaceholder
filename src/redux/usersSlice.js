@@ -5,13 +5,11 @@ export const usersSlice = createSlice({
     initialState: {
         users: [],
         loading: true,
-        expire: ''
     },
     reducers: {
         getUsers: (state, action) => {
             state.users = action.payload;
             state.loading = false;
-            state.expire = Date.now();
         },
         loadingUsers: (state, action) => {
             state.loading = action.payload;
